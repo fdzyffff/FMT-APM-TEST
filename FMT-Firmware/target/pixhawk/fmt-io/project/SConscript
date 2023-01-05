@@ -1,0 +1,13 @@
+# for module compiling
+import os
+from building import *
+
+cwd = GetCurrentDir()
+
+src	= Glob('source/*.c')
+CPPPATH = [cwd, cwd + '/source']
+
+group = DefineGroup('Applications', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
+

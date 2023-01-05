@@ -1,0 +1,13 @@
+from building import *
+
+cwd = GetCurrentDir()
+
+src = Glob('*.c')
+src += Glob('msp/*.c')
+src += Glob('ublox/*.c')
+
+CPPPATH = [cwd]
+
+group = DefineGroup('PROTOCOL', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

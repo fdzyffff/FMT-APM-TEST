@@ -1,0 +1,57 @@
+from building import *
+
+cwd = GetCurrentDir()
+src	= []
+inc = []
+
+src += Glob('*.c')
+src += Glob('*.cpp')
+src += Glob('ArduCopter/*.cpp')
+src += Glob('AP_libraries/AC_AttitudeControl/*.cpp')
+src += Glob('AP_libraries/AC_PID/*.cpp')
+src += Glob('AP_libraries/AC_WPNav/*.cpp')
+src += Glob('AP_libraries/AP_AHRS/*.cpp')
+src += Glob('AP_libraries/AP_Common/*.cpp')
+src += Glob('AP_libraries/AP_InertialNav/*.cpp')
+src += Glob('AP_libraries/AP_InertialSensor/*.cpp')
+src += Glob('AP_libraries/AP_Math/*.cpp')
+src += Glob('AP_libraries/AP_Mission/*.cpp')
+src += Glob('AP_libraries/AP_Motors/*.cpp')
+src += Glob('AP_libraries/AP_NavEKF/*.cpp')
+src += Glob('AP_libraries/AP_Notify/*.cpp')
+src += Glob('AP_libraries/AP_RCMapper/*.cpp')
+src += Glob('AP_libraries/AP_Vehicle/*.cpp')
+src += Glob('AP_libraries/Filter/*.cpp')
+src += Glob('AP_libraries/PID/*.cpp')
+src += Glob('AP_libraries/RC_Channel/*.cpp')
+src += Glob('AP_libraries/SRV_Channel/*.cpp')
+src += Glob('AP_libraries/AP_Scheduler/*.cpp')
+src += Glob('AP_libraries/AP_Param/*.cpp')
+
+inc += [cwd]
+inc += [cwd + '/ArduCopter']
+inc += [cwd + '/AP_Libraries/AC_AttitudeControl']
+inc += [cwd + '/AP_Libraries/AC_PID']
+inc += [cwd + '/AP_Libraries/AC_WPNav']
+inc += [cwd + '/AP_Libraries/AP_AHRS']
+inc += [cwd + '/AP_Libraries/AP_Common']
+inc += [cwd + '/AP_Libraries/AP_InertialNav']
+inc += [cwd + '/AP_Libraries/AP_InertialSensor']
+inc += [cwd + '/AP_Libraries/AP_Math']
+inc += [cwd + '/AP_Libraries/AP_Mission']
+inc += [cwd + '/AP_Libraries/AP_Motors']
+inc += [cwd + '/AP_Libraries/AP_NavEKF']
+inc += [cwd + '/AP_Libraries/AP_Notify']
+inc += [cwd + '/AP_Libraries/AP_RCMapper']
+inc += [cwd + '/AP_Libraries/AP_Vehicle']
+inc += [cwd + '/AP_Libraries/Filter']
+inc += [cwd + '/AP_Libraries/PID']
+inc += [cwd + '/AP_Libraries/RC_Channel']
+inc += [cwd + '/AP_Libraries/SRV_Channel']
+inc += [cwd + '/AP_Libraries/AP_Scheduler']
+inc += [cwd + '/AP_Libraries/AP_HAL/utility']
+inc += [cwd + '/AP_Libraries/AP_Param']
+
+group = DefineGroup('APM_LIB', src, depend = [''], CPPPATH = inc, CPPDEFINES=['APM_STANDALONE'])
+
+Return('group')

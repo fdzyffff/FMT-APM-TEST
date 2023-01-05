@@ -1,0 +1,17 @@
+from building import *
+import BuildLists as bl
+
+cwd = GetCurrentDir()
+
+src = []
+for f in bl.DRIVERS:
+    src += Glob(f)
+
+inc = []
+for d in bl.DRIVERS_CPPPATH:
+    inc += [cwd + '/' + d]
+
+group = DefineGroup('Driver', src, depend = [''], CPPPATH = inc)
+
+Return('group')
+
