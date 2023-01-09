@@ -8,12 +8,6 @@
 extern "C" {
 #endif
 
-#define _EXT_DTCM0      __attribute__((section(".cf_dtcm0_ekf2")))
-#define _EXT_ITCM1      __attribute__((section(".cf_ext_itcm1")))
-#define _EXT_DTCM1      __attribute__((section(".dtcm1")))
-#define _EXT_DTCM1_ROD  __attribute__((section(".dtcm1_rodata")))
-#define _EXT_DTCM1_BSS  __attribute__((section(".dtcm1_bss")))
-
 #ifndef DEFINED_TYPEDEF_FOR_Mission_Data_Bus_
     #define DEFINED_TYPEDEF_FOR_Mission_Data_Bus_
 

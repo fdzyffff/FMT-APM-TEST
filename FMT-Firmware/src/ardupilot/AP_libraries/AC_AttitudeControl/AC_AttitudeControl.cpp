@@ -1,5 +1,6 @@
 #include "AC_AttitudeControl.h"
 #include "AP_Math.h"
+#include <board.h>
 
 AC_AttitudeControl::AC_AttitudeControl(AP_AHRS_View &ahrs, const AP_Vehicle::MultiCopter &aparm, AP_Motors& motors, float dt) :
         _slew_yaw(AC_ATTITUDE_CONTROL_SLEW_YAW_DEFAULT_CDS),
@@ -25,6 +26,7 @@ AC_AttitudeControl::AC_AttitudeControl(AP_AHRS_View &ahrs, const AP_Vehicle::Mul
         }
 
 // Set output throttle and disable stabilization
+_EXT_DTCM0
 void AC_AttitudeControl::set_throttle_out_unstabilized(float throttle_in, bool reset_attitude_control, float filter_cutoff)
 {
     _throttle_in = throttle_in;
@@ -37,6 +39,7 @@ void AC_AttitudeControl::set_throttle_out_unstabilized(float throttle_in, bool r
 }
 
 // Ensure attitude controller have zero errors to relax rate controller output
+_EXT_DTCM0
 void AC_AttitudeControl::relax_attitude_controllers()
 {
     // TODO add _ahrs.get_quaternion()
@@ -53,6 +56,7 @@ void AC_AttitudeControl::relax_attitude_controllers()
     get_rate_yaw_pid().reset_I();
 }
 
+_EXT_DTCM0
 void AC_AttitudeControl::reset_rate_controller_I_terms()
 {
     get_rate_roll_pid().reset_I();
@@ -85,6 +89,7 @@ void AC_AttitudeControl::reset_rate_controller_I_terms()
 
 
 // Command a Quaternion attitude with feedforward and smoothing
+_EXT_DTCM0
 void AC_AttitudeControl::input_quaternion(Quaternion attitude_desired_quat, float smoothing_gain)
 {
     // calculate the attitude target euler angles
@@ -120,6 +125,7 @@ void AC_AttitudeControl::input_quaternion(Quaternion attitude_desired_quat, floa
 }
 
 // Command an euler roll and pitch angle and an euler yaw rate with angular velocity feedforward and smoothing
+_EXT_DTCM0
 void AC_AttitudeControl::input_euler_angle_roll_pitch_euler_rate_yaw(float euler_roll_angle_cd, float euler_pitch_angle_cd, float euler_yaw_rate_cds, float smoothing_gain)
 {
     // Convert from centidegrees on public interface to radians
@@ -170,6 +176,7 @@ void AC_AttitudeControl::input_euler_angle_roll_pitch_euler_rate_yaw(float euler
 }
 
 // Command an euler roll, pitch and yaw angle with angular velocity feedforward and smoothing
+_EXT_DTCM0
 void AC_AttitudeControl::input_euler_angle_roll_pitch_yaw(float euler_roll_angle_cd, float euler_pitch_angle_cd, float euler_yaw_angle_cd, bool slew_yaw, float smoothing_gain)
 {
     // Convert from centidegrees on public interface to radians
@@ -227,6 +234,7 @@ void AC_AttitudeControl::input_euler_angle_roll_pitch_yaw(float euler_roll_angle
 }
 
 // Command an euler roll, pitch, and yaw rate with angular velocity feedforward and smoothing
+_EXT_DTCM0
 void AC_AttitudeControl::input_euler_rate_roll_pitch_yaw(float euler_roll_rate_cds, float euler_pitch_rate_cds, float euler_yaw_rate_cds)
 {
     // Convert from centidegrees on public interface to radians
@@ -269,6 +277,7 @@ void AC_AttitudeControl::input_euler_rate_roll_pitch_yaw(float euler_roll_rate_c
 }
 
 // Command an angular velocity with angular velocity feedforward and smoothing
+_EXT_DTCM0
 void AC_AttitudeControl::input_rate_bf_roll_pitch_yaw(float roll_rate_bf_cds, float pitch_rate_bf_cds, float yaw_rate_bf_cds)
 {
     // Convert from centidegrees on public interface to radians
@@ -307,6 +316,7 @@ void AC_AttitudeControl::input_rate_bf_roll_pitch_yaw(float roll_rate_bf_cds, fl
 
 // Command an angular step (i.e change) in body frame angle
 // Used to command a step in angle without exciting the orthogonal axis during autotune
+_EXT_DTCM0
 void AC_AttitudeControl::input_angle_step_bf_roll_pitch_yaw(float roll_angle_step_bf_cd, float pitch_angle_step_bf_cd, float yaw_angle_step_bf_cd)
 {
     // Convert from centidegrees on public interface to radians
@@ -332,6 +342,7 @@ void AC_AttitudeControl::input_angle_step_bf_roll_pitch_yaw(float roll_angle_ste
 }
 
 // Calculates the body frame angular velocities to follow the target attitude
+_EXT_DTCM0
 void AC_AttitudeControl::attitude_controller_run_quat()
 {
     // Retrieve quaternion vehicle attitude
@@ -380,6 +391,7 @@ void AC_AttitudeControl::attitude_controller_run_quat()
 
 // thrust_heading_rotation_angles - calculates two ordered rotations to move the att_from_quat quaternion to the att_to_quat quaternion.
 // The first rotation corrects the thrust vector and the second rotation corrects the heading vector.
+_EXT_DTCM0
 void AC_AttitudeControl::thrust_heading_rotation_angles(Quaternion& att_to_quat, const Quaternion& att_from_quat, Vector3f& att_diff_angle, float& thrust_vec_dot)
 {
     Matrix3f att_to_rot_matrix; // earth frame to target frame
@@ -427,6 +439,7 @@ void AC_AttitudeControl::thrust_heading_rotation_angles(Quaternion& att_to_quat,
 
 // calculates the velocity correction from an angle error. The angular velocity has acceleration and
 // deceleration limits including basic jerk limiting using smoothing_gain
+_EXT_DTCM0
 float AC_AttitudeControl::input_shaping_angle(float error_angle, float smoothing_gain, float accel_max, float target_ang_vel)
 {
     error_angle = wrap_PI(error_angle);
@@ -443,6 +456,7 @@ float AC_AttitudeControl::input_shaping_angle(float error_angle, float smoothing
 }
 
 // limits the acceleration and deceleration of a velocity request
+_EXT_DTCM0
 float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max)
 {
     if (accel_max > 0.0f) {
@@ -455,6 +469,7 @@ float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desi
 }
 
 // translates body frame acceleration limits to the euler axis
+_EXT_DTCM0
 Vector3f AC_AttitudeControl::euler_accel_limit(Vector3f euler_rad, Vector3f euler_accel)
 {
     float sin_phi = apm_constrain_float(fabsf(sinf(euler_rad.x)), 0.1f, 1.0f);
@@ -475,6 +490,7 @@ Vector3f AC_AttitudeControl::euler_accel_limit(Vector3f euler_rad, Vector3f eule
 }
 
 // Shifts earth frame yaw target by yaw_shift_cd. yaw_shift_cd should be in centidegrees and is added to the current target heading
+_EXT_DTCM0
 void AC_AttitudeControl::shift_ef_yaw_target(float yaw_shift_cd)
 {
     float yaw_shift = radians(yaw_shift_cd*0.01f);
@@ -484,6 +500,7 @@ void AC_AttitudeControl::shift_ef_yaw_target(float yaw_shift_cd)
 }
 
 // Convert a 321-intrinsic euler angle derivative to an angular velocity vector
+_EXT_DTCM0
 void AC_AttitudeControl::euler_rate_to_ang_vel(const Vector3f& euler_rad, const Vector3f& euler_rate_rads, Vector3f& ang_vel_rads)
 {
     float sin_theta = sinf(euler_rad.y);
@@ -498,6 +515,7 @@ void AC_AttitudeControl::euler_rate_to_ang_vel(const Vector3f& euler_rad, const 
 
 // Convert an angular velocity vector to a 321-intrinsic euler angle derivative
 // Returns false if the vehicle is pitched 90 degrees up or down
+_EXT_DTCM0
 bool AC_AttitudeControl::ang_vel_to_euler_rate(const Vector3f& euler_rad, const Vector3f& ang_vel_rads, Vector3f& euler_rate_rads)
 {
     float sin_theta = sinf(euler_rad.y);
@@ -517,6 +535,7 @@ bool AC_AttitudeControl::ang_vel_to_euler_rate(const Vector3f& euler_rad, const 
 }
 
 // Update rate_target_ang_vel using attitude_error_rot_vec_rad
+_EXT_DTCM0
 Vector3f AC_AttitudeControl::update_ang_vel_target_from_att_error(Vector3f attitude_error_rot_vec_rad)
 {
     Vector3f rate_target_ang_vel;
@@ -544,6 +563,7 @@ Vector3f AC_AttitudeControl::update_ang_vel_target_from_att_error(Vector3f attit
 }
 
 // Run the roll angular velocity PID controller and return the output
+_EXT_DTCM0
 float AC_AttitudeControl::rate_target_to_motor_roll(float rate_actual_rads, float rate_target_rads)
 {
     float rate_error_rads = rate_target_rads - rate_actual_rads;
@@ -566,6 +586,7 @@ float AC_AttitudeControl::rate_target_to_motor_roll(float rate_actual_rads, floa
 }
 
 // Run the pitch angular velocity PID controller and return the output
+_EXT_DTCM0
 float AC_AttitudeControl::rate_target_to_motor_pitch(float rate_actual_rads, float rate_target_rads)
 {
     float rate_error_rads = rate_target_rads - rate_actual_rads;
@@ -588,6 +609,7 @@ float AC_AttitudeControl::rate_target_to_motor_pitch(float rate_actual_rads, flo
 }
 
 // Run the yaw angular velocity PID controller and return the output
+_EXT_DTCM0
 float AC_AttitudeControl::rate_target_to_motor_yaw(float rate_actual_rads, float rate_target_rads)
 {
     float rate_error_rads = rate_target_rads - rate_actual_rads;
@@ -610,6 +632,7 @@ float AC_AttitudeControl::rate_target_to_motor_yaw(float rate_actual_rads, float
 }
 
 // Enable or disable body-frame feed forward
+_EXT_DTCM0
 void AC_AttitudeControl::accel_limiting(bool enable_limits)
 {
 /*    if (enable_limits) {
@@ -632,6 +655,7 @@ void AC_AttitudeControl::accel_limiting(bool enable_limits)
 }
 
 // Return tilt angle limit for pilot input that prioritises altitude hold over lean angle
+_EXT_DTCM0
 float AC_AttitudeControl::get_althold_lean_angle_max() const
 {
     // convert to centi-degrees for public interface
@@ -639,6 +663,7 @@ float AC_AttitudeControl::get_althold_lean_angle_max() const
 }
 
 // Proportional controller with piecewise sqrt sections to constrain second derivative
+_EXT_DTCM0
 float AC_AttitudeControl::sqrt_controller(float error, float p, float second_ord_lim)
 {
     if (second_ord_lim < 0.0f || is_zero(second_ord_lim) || is_zero(p)) {
@@ -657,6 +682,7 @@ float AC_AttitudeControl::sqrt_controller(float error, float p, float second_ord
 }
 
 // Inverse proportional controller with piecewise sqrt sections to constrain second derivative
+_EXT_DTCM0
 float AC_AttitudeControl::stopping_point(float first_ord_mag, float p, float second_ord_lim)
 {
     if (second_ord_lim > 0.0f && !is_zero(second_ord_lim) && is_zero(p)) {
@@ -685,6 +711,7 @@ float AC_AttitudeControl::stopping_point(float first_ord_mag, float p, float sec
 }
 
 // Return roll rate step size in centidegrees/s that results in maximum output after 4 time steps
+_EXT_DTCM0
 float AC_AttitudeControl::max_rate_step_bf_roll()
 {
     float alpha = get_rate_roll_pid().get_filt_alpha();
@@ -693,6 +720,7 @@ float AC_AttitudeControl::max_rate_step_bf_roll()
 }
 
 // Return pitch rate step size in centidegrees/s that results in maximum output after 4 time steps
+_EXT_DTCM0
 float AC_AttitudeControl::max_rate_step_bf_pitch()
 {
     float alpha = get_rate_pitch_pid().get_filt_alpha();
@@ -701,6 +729,7 @@ float AC_AttitudeControl::max_rate_step_bf_pitch()
 }
 
 // Return yaw rate step size in centidegrees/s that results in maximum output after 4 time steps
+_EXT_DTCM0
 float AC_AttitudeControl::max_rate_step_bf_yaw()
 {
     float alpha = get_rate_yaw_pid().get_filt_alpha();
