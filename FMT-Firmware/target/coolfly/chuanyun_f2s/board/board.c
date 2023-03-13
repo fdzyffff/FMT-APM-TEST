@@ -507,8 +507,8 @@ void bsp_initialize(void)
     FMT_CHECK(register_sensor_barometer("barometer"));
     #endif
 
-    FMT_CHECK(register_ar_rc());
-    FMT_CHECK(register_bb_com());
+    // FMT_CHECK(register_ar_rc());
+    // FMT_CHECK(register_bb_com());
 
     /* init finsh */
     finsh_system_init();
@@ -551,7 +551,7 @@ void bsp_post_initialize(void)
     FMT_CHECK(devmq_start_work());
 
     /* initialize led */
-    FMT_CHECK(led_control_init());
+    // FMT_CHECK(led_control_init());
 
     /* initialize power management unit */
     FMT_CHECK(pmu_init());

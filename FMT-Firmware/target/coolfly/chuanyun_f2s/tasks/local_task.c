@@ -46,11 +46,11 @@ void task_local_entry(void* parameter)
 {
 
     sys_event_start();
-    sbus_start();
-    bb_led_start();
+    // sbus_start();
+    // bb_led_start();
     bb_match_id_start();
 
-    xc7027_start();
+    // xc7027_start();
 
     while (1) {
         DLOG_Process(NULL);
