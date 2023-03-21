@@ -25,6 +25,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 // reboot
+_EXT_DTCM1
 static int handle_reboot_cmd(int argc, char** argv, int optc, optv_t* optv)
 {
     printf("rebooting...\n");
@@ -37,6 +38,7 @@ static int handle_reboot_cmd(int argc, char** argv, int optc, optv_t* optv)
     return 0;
 }
 
+_EXT_DTCM1
 int cmd_reboot(int argc, char** argv)
 {
     return syscmd_process(argc, argv, handle_reboot_cmd);
@@ -45,6 +47,7 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_reboot, __cmd_reboot, reboot the system);
 
 ////////////////////////////////////////////////////////////////////////////
 // reset_fct
+_EXT_DTCM1
 static int handle_reset_fct(int argc, char** argv, int optc, optv_t* optv)
 {
     FCT_Reset();
@@ -54,6 +57,7 @@ static int handle_reset_fct(int argc, char** argv, int optc, optv_t* optv)
     return 0;
 }
 
+_EXT_DTCM1
 int cmd_reset_fct(int argc, char** argv)
 {
     return syscmd_process(argc, argv, handle_reset_fct);
@@ -61,6 +65,7 @@ int cmd_reset_fct(int argc, char** argv)
 FINSH_FUNCTION_EXPORT_ALIAS(cmd_reset_fct, __cmd_reset_fct, reset the RF factory setting);
 
 // set_bb_id
+_EXT_DTCM1
 static int handle_set_bb_id(int argc, char** argv, int optc, optv_t* optv)
 {
 
@@ -83,6 +88,7 @@ static int handle_set_bb_id(int argc, char** argv, int optc, optv_t* optv)
     return 0;
 }
 
+_EXT_DTCM1
 int cmd_set_bb_id(int argc, char** argv)
 {
     return syscmd_process(argc, argv, handle_set_bb_id);
@@ -91,6 +97,7 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_set_bb_id, __cmd_set_bb_id, set basebase rc id<r
 
 ////////////////////////////////////////////////////////////////////////////
 // set_chip_id
+_EXT_DTCM1
 static int handle_set_chip_id(int argc, char** argv, int optc, optv_t* optv)
 {
     uint8_t idArr[5];
@@ -108,6 +115,7 @@ static int handle_set_chip_id(int argc, char** argv, int optc, optv_t* optv)
     return 0;
 }
 
+_EXT_DTCM1
 int cmd_set_chip_id(int argc, char** argv)
 {
     return syscmd_process(argc, argv, handle_set_chip_id);
@@ -118,6 +126,7 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_set_chip_id, __cmd_set_chip_id, set<chip id1 ~5>
 // swtich_mavlink
 
 /* coolfly use to switch mavlink channle */
+_EXT_DTCM1
 fmt_err_t __switch_mavlink_to_device(rt_device_t dev)
 {
     fmt_err_t ret = RT_ERROR;
@@ -135,6 +144,7 @@ fmt_err_t __switch_mavlink_to_device(rt_device_t dev)
     return ret;
 }
 
+_EXT_DTCM1
 static void sw_mav_show_usage(void)
 {
     COMMAND_USAGE("sw_mav", "[options]");
@@ -145,6 +155,7 @@ static void sw_mav_show_usage(void)
     SHELL_COMMAND("bb_com", "swtich the mavlink to bb_com, use Remote to show the mavlink");
 }
 
+_EXT_DTCM1
 static int sw_mav_channel(const char* dev)
 {
     fmt_err_t ret = RT_ERROR;
@@ -162,6 +173,7 @@ static int sw_mav_channel(const char* dev)
     return ret;
 }
 
+_EXT_DTCM1
 static int handle_sw_mav_cmd(int argc, char** argv, int optc, optv_t* optv)
 {
     char* arg;
@@ -188,6 +200,7 @@ static int handle_sw_mav_cmd(int argc, char** argv, int optc, optv_t* optv)
     return res;
 }
 
+_EXT_DTCM1
 int cmd_sw_mav(int argc, char** argv)
 {
     return syscmd_process(argc, argv, handle_sw_mav_cmd);

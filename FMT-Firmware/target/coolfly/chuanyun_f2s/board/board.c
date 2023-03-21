@@ -91,6 +91,7 @@ static const struct dfs_mount_tbl mnt_table[] = {
 
 static toml_table_t* __toml_root_tab = NULL;
 
+_EXT_DTCM1
 static void banner_item(const char* name, const char* content, char pad, uint32_t len)
 {
     int pad_len;
@@ -114,29 +115,30 @@ static void banner_item(const char* name, const char* content, char pad, uint32_
 }
 
 #define BANNER_ITEM_LEN 42
+_EXT_DTCM1
 static void bsp_show_information(void)
 {
     char buffer[50];
 
-    //
-    console_println("            :1tfffffffffffffffffffffffffffffffffffti,              ");
-    console_println("        .1fffffffffffffffffffffffffffffffffffffffffffft;           ");
-    console_println("      :tfffffffffffffffffffffffffffffffffffffffffffffffff1         ");
-    console_println("    .tffffffffffti:::itffffffffffffffffffffffffffffffffffff;       ");
-    console_println("   ,fffffffft,           ,tfffffffffffffffffffffffffffffffff1      ");
-    console_println("  ,ffffffft.    ,itfti,    .1ffffffffffffffffffff1   ;fffffffi     ");
-    console_println("  tffffffi   .1fffffffff1.   .tfffffffffffffffffff:   ,fffffff:    ");
-    console_println(" ,fffffff.  .tfft,   ,tffft,   1ffffffffffi    ifff1   :fffffft    ");
-    console_println(" ;ffffff1   ifft      .ffffff1;:fffffffff;      ;fff.  .fffffff.   ");
-    console_println(" ;ffffff1   ;fff.     ,ffLffffff1 ,itffffi      ifff.  .fffffff.   ");
-    console_println(" ,fffffff,   1fffi:,:1fffffffffffi   .1ffft;,,;tfff:   iffffff1    ");
-    console_println("  1fffffft    ;ffffffffffffffffffft.   .1ffffffff1.   ;fffffff,    ");
-    console_println("  .tfffffff;  :ffffffffffffffffffffft.    .,::,.    .1fffffff;     ");
-    console_println("   .tffffffffffffffffffffffffffffffffft;          ;tffffffff;      ");
-    console_println("     ;fffffffffffffffffffffffffffffffffffffttttffffffffffft.       ");
-    console_println("       ifffffffffffffffffffffffffffffffffffffffffffffffff,         ");
-    console_println("         ,tfffffffffffffffffffffffffffffffffffffffffff;            ");
-    console_println("             .itfffffffffffffffffffffffffffffffft1:                ");
+    // //
+    // console_println("            :1tfffffffffffffffffffffffffffffffffffti,              ");
+    // console_println("        .1fffffffffffffffffffffffffffffffffffffffffffft;           ");
+    // console_println("      :tfffffffffffffffffffffffffffffffffffffffffffffffff1         ");
+    // console_println("    .tffffffffffti:::itffffffffffffffffffffffffffffffffffff;       ");
+    // console_println("   ,fffffffft,           ,tfffffffffffffffffffffffffffffffff1      ");
+    // console_println("  ,ffffffft.    ,itfti,    .1ffffffffffffffffffff1   ;fffffffi     ");
+    // console_println("  tffffffi   .1fffffffff1.   .tfffffffffffffffffff:   ,fffffff:    ");
+    // console_println(" ,fffffff.  .tfft,   ,tffft,   1ffffffffffi    ifff1   :fffffft    ");
+    // console_println(" ;ffffff1   ifft      .ffffff1;:fffffffff;      ;fff.  .fffffff.   ");
+    // console_println(" ;ffffff1   ;fff.     ,ffLffffff1 ,itffffi      ifff.  .fffffff.   ");
+    // console_println(" ,fffffff,   1fffi:,:1fffffffffffi   .1ffft;,,;tfff:   iffffff1    ");
+    // console_println("  1fffffft    ;ffffffffffffffffffft.   .1ffffffff1.   ;fffffff,    ");
+    // console_println("  .tfffffff;  :ffffffffffffffffffffft.    .,::,.    .1fffffff;     ");
+    // console_println("   .tffffffffffffffffffffffffffffffffft;          ;tffffffff;      ");
+    // console_println("     ;fffffffffffffffffffffffffffffffffffffttttffffffffffft.       ");
+    // console_println("       ifffffffffffffffffffffffffffffffffffffffffffffffff,         ");
+    // console_println("         ,tfffffffffffffffffffffffffffffffffffffffffff;            ");
+    // console_println("             .itfffffffffffffffffffffffffffffffft1:                ");
 
     sprintf(buffer, "FMT FW %s", FMT_VERSION);
     banner_item("Firmware", buffer, '.', BANNER_ITEM_LEN);
@@ -162,6 +164,7 @@ static void bsp_show_information(void)
     }
 }
 
+_EXT_DTCM1
 static fmt_err_t bsp_parse_toml_sysconfig(toml_table_t* root_tab)
 {
     fmt_err_t err = FMT_EOK;
@@ -280,6 +283,7 @@ void SystemClock_Config(void)
 {
 }
 
+_EXT_DTCM1
 void cf_delay_ms(uint32_t num)
 {
     volatile uint32_t i;
@@ -305,6 +309,7 @@ void cf_delay_ms(uint32_t num)
 #define MAX_WQ_SIZE 10
 extern WorkQueue_t wq_list[MAX_WQ_SIZE];
 
+_EXT_DTCM1
 fmt_err_t chuanyun_workqueue_manager_init(void)
 {
     wq_list[2] = workqueue_create("wq:sysevent_work", 5, 2048, 1);
@@ -314,6 +319,7 @@ fmt_err_t chuanyun_workqueue_manager_init(void)
 }
 
 /* this function will be called before rtos start, which is not in the thread context */
+_EXT_DTCM1
 void bsp_early_initialize(void)
 {
     // /* Enable CPU L1-cache */
@@ -394,6 +400,7 @@ void bsp_early_initialize(void)
 }
 
 /* this function will be called after rtos start, which is in thread context */
+_EXT_DTCM1
 void bsp_initialize(void)
 {
     /* enable on-board power supply */
@@ -523,6 +530,8 @@ void bsp_initialize(void)
 #endif
 }
 
+
+_EXT_DTCM1
 void bsp_post_initialize(void)
 {
     /* toml system configure */
@@ -565,12 +574,14 @@ void bsp_post_initialize(void)
 /**
  * This function will initial STM32 board.
  */
+_EXT_DTCM1
 void rt_hw_board_init()
 {
     bsp_early_initialize();
 }
 
 /* Re-implement this function to define customized rotation */
+_EXT_DTCM1
 void icm20600_rotate_to_ned(float* val)
 {
     float tmp;
@@ -586,6 +597,7 @@ void icm20600_rotate_to_ned(float* val)
 }
 
 /* Re-implement this function to define customized rotation */
+_EXT_DTCM1
 void bmi088_rotate_to_ned(float val[3])
 {
     /* do nothing */

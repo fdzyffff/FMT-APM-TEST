@@ -21,6 +21,8 @@
 #include "hal/gyro/gyro.h"
 #include "hal/spi/spi.h"
 
+#include "board.h"
+
 #define DRV_DBG(...)
 // #define DRV_DBG(...) console_printf(__VA_ARGS__)
 
@@ -154,6 +156,8 @@ RT_WEAK void bmi088_rotate_to_ned(float val[3])
     /* do nothing */
 }
 
+
+_EXT_DTCM1
 static rt_err_t __write_checked_reg(rt_device_t spi_device, rt_uint8_t reg, rt_uint8_t val)
 {
     rt_uint8_t r_val;
@@ -168,6 +172,8 @@ static rt_err_t __write_checked_reg(rt_device_t spi_device, rt_uint8_t reg, rt_u
     return (r_val == val) ? RT_EOK : RT_ERROR;
 }
 
+
+_EXT_DTCM1
 static rt_err_t __modify_reg(rt_device_t spi_device, rt_uint8_t reg, reg_val_t reg_val)
 {
     uint8_t value;
@@ -186,6 +192,8 @@ static rt_err_t __modify_reg(rt_device_t spi_device, rt_uint8_t reg, reg_val_t r
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t gyro_set_sample_rate(uint32_t frequency_hz)
 {
     reg_val_t reg_val;
@@ -209,6 +217,7 @@ static rt_err_t gyro_set_sample_rate(uint32_t frequency_hz)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t gyro_set_dlpf_filter(uint16_t frequency_hz)
 {
     /* lpf bw is set by BMI088_BW_ADDR */
@@ -217,6 +226,8 @@ static rt_err_t gyro_set_dlpf_filter(uint16_t frequency_hz)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t gyro_set_range(unsigned max_dps)
 {
     reg_val_t reg_val;
@@ -252,6 +263,7 @@ static rt_err_t gyro_set_range(unsigned max_dps)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t gyro_read_raw(int16_t gyr[3])
 {
     RT_TRY(spi_read_multi_reg8(gyro_spi_dev, BMI088_RATE_X_LSB_ADDR, (uint8_t*)gyr, 6));
@@ -259,6 +271,7 @@ static rt_err_t gyro_read_raw(int16_t gyr[3])
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t gyro_read_rad(float gyr[3])
 {
     int16_t gyr_raw[3];
@@ -275,6 +288,7 @@ static rt_err_t gyro_read_rad(float gyr[3])
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t gyroscope_init(void)
 {
     uint8_t gyro_id;
@@ -302,6 +316,8 @@ static rt_err_t gyroscope_init(void)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t gyro_config(gyro_dev_t gyro, const struct gyro_configure* cfg)
 {
     RT_ASSERT(cfg != RT_NULL);
@@ -317,11 +333,15 @@ static rt_err_t gyro_config(gyro_dev_t gyro, const struct gyro_configure* cfg)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t gyro_control(gyro_dev_t gyro, int cmd, void* arg)
 {
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_size_t gyro_read(gyro_dev_t gyro, rt_off_t pos, void* data, rt_size_t size)
 {
     if (data == NULL) {
@@ -341,6 +361,8 @@ const static struct gyro_ops __gyro_ops = {
     gyro_read,
 };
 
+
+_EXT_DTCM1
 static rt_err_t accel_set_sample_rate(uint32_t frequency_hz)
 {
     reg_val_t reg_val;
@@ -378,6 +400,8 @@ static rt_err_t accel_set_sample_rate(uint32_t frequency_hz)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accel_set_bwp_odr(uint16_t dlpf_freq_hz)
 {
     reg_val_t reg_val;
@@ -486,6 +510,8 @@ static rt_err_t accel_set_bwp_odr(uint16_t dlpf_freq_hz)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accel_set_range(uint32_t max_g)
 {
     uint8_t reg_val;
@@ -514,6 +540,8 @@ static rt_err_t accel_set_range(uint32_t max_g)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accelerometer_init(void)
 {
     uint8_t accel_id;
@@ -552,6 +580,8 @@ static rt_err_t accelerometer_init(void)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accel_read_raw(int16_t acc[3])
 {
     uint8_t buffer[7];
@@ -568,6 +598,8 @@ static rt_err_t accel_read_raw(int16_t acc[3])
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accel_read_m_s2(float acc[3])
 {
     int16_t acc_raw[3];
@@ -584,6 +616,8 @@ static rt_err_t accel_read_m_s2(float acc[3])
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t accel_config(accel_dev_t accel, const struct accel_configure* cfg)
 {
 
@@ -600,11 +634,14 @@ static rt_err_t accel_config(accel_dev_t accel, const struct accel_configure* cf
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t accel_control(accel_dev_t accel, int cmd, void* arg)
 {
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_size_t accel_read(accel_dev_t accel, rt_off_t pos, void* data, rt_size_t size)
 {
     if (data == NULL) {
@@ -650,6 +687,7 @@ static struct accel_device accel_dev = {
     .bus_type = GYRO_SPI_BUS_TYPE
 };
 
+_EXT_DTCM1
 rt_err_t drv_bmi088_init(const char* gyro_spi_device_name, const char* accel_spi_device_name,
                          const char* gyro_device_name, const char* accel_device_name)
 {

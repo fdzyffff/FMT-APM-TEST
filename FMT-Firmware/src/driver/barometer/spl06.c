@@ -19,6 +19,8 @@
 #include "driver/barometer/spl06.h"
 #include "hal/barometer/barometer.h"
 #include "hal/spi/spi.h"
+#include "board.h"
+
 
 #define DRV_DBG(...) printf(__VA_ARGS__)
 
@@ -90,6 +92,8 @@ static int16_t c0, c1, c01, c11, c20, c21, c30;
 static int32_t c00, c10;
 static uint32_t _kP, _kT;
 
+
+_EXT_DTCM1
 static rt_err_t modify_reg(rt_device_t spi_device, rt_uint8_t reg, reg_val_t reg_val)
 {
     uint8_t value;
@@ -104,6 +108,7 @@ static rt_err_t modify_reg(rt_device_t spi_device, rt_uint8_t reg, reg_val_t reg
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t read_coef(void)
 {
     uint8_t coef_data[18];
@@ -127,6 +132,8 @@ static rt_err_t read_coef(void)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t config_pressure(uint8_t rate, uint8_t prc)
 {
     switch (prc) {
@@ -168,6 +175,8 @@ static rt_err_t config_pressure(uint8_t rate, uint8_t prc)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t config_temprature(uint8_t rate, uint8_t prc)
 {
     switch (prc) {
@@ -210,6 +219,8 @@ static rt_err_t config_temprature(uint8_t rate, uint8_t prc)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t measure(baro_report_t* report)
 {
     uint8_t data[3];
@@ -236,6 +247,8 @@ static rt_err_t measure(baro_report_t* report)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t lowlevel_init(void)
 {
     uint8_t chip_id;
@@ -269,6 +282,8 @@ static rt_err_t lowlevel_init(void)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t baro_control(baro_dev_t baro, int cmd, void* arg)
 {
     switch (cmd) {
@@ -283,6 +298,8 @@ static rt_err_t baro_control(baro_dev_t baro, int cmd, void* arg)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_size_t baro_read(baro_dev_t baro, baro_report_t* report)
 {
     rt_size_t size = 0;
@@ -294,11 +311,13 @@ static rt_size_t baro_read(baro_dev_t baro, baro_report_t* report)
     return size;
 }
 
+
 static struct baro_ops _baro_ops = {
     .baro_control = baro_control,
     .baro_read = baro_read
 };
 
+_EXT_DTCM1
 rt_err_t drv_spl06_init(const char* spi_device_name, const char* baro_device_name)
 {
     static struct baro_device baro_dev = {

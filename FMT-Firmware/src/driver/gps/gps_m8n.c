@@ -14,6 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 #include <firmament.h>
+#include "board.h"
 
 #include "driver/gps/gps_m8n.h"
 #include "hal/gps/gps.h"
@@ -33,6 +34,8 @@ static struct gps_device gps_device;
 static ubx_decoder_t ubx_decoder;
 static gps_report_t gps_report;
 
+
+_EXT_DTCM1
 static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
 {
     uint8_t ch;
@@ -44,6 +47,8 @@ static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static int ubx_rx_handle(void)
 {
     int ret = 0;
@@ -261,6 +266,7 @@ static int ubx_rx_handle(void)
 }
 
 // -1 = NAK, error or timeout, 0 = ACK
+_EXT_DTCM1
 static int wait_for_ack(const uint16_t msg, const uint32_t timeout)
 {
     int ret = -1;
@@ -282,6 +288,8 @@ static int wait_for_ack(const uint16_t msg, const uint32_t timeout)
     return ret;
 }
 
+
+_EXT_DTCM1
 static rt_err_t set_baudrate(rt_device_t dev, uint32_t baudrate)
 {
     struct serial_device* serial_dev = (struct serial_device*)dev;
@@ -297,6 +305,8 @@ static rt_err_t set_baudrate(rt_device_t dev, uint32_t baudrate)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t probe(uint32_t* gps_baudrate)
 {
     uint32_t baudrates[] = { 9600, 19200, 38400, 57600, 115200, 230400, 460800 };
@@ -346,6 +356,8 @@ static rt_err_t probe(uint32_t* gps_baudrate)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t configure_by_ubx(uint32_t baudrate)
 {
     /* Send a CFG-PRT message again, this time change the baudrate */
@@ -454,6 +466,7 @@ static rt_err_t configure_by_ubx(uint32_t baudrate)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t gps_control(gps_dev_t gps_dev, int cmd, void* arg)
 {
     switch (cmd) {
@@ -481,6 +494,7 @@ static rt_err_t gps_control(gps_dev_t gps_dev, int cmd, void* arg)
     return RT_EINVAL;
 }
 
+_EXT_DTCM1
 static rt_size_t gps_read(gps_dev_t gps_dev, gps_report_t* report)
 {
     if (ubx_decoder.got_posllh && ubx_decoder.got_velned) {
@@ -502,6 +516,8 @@ static struct gps_ops gps_ops = {
     gps_read
 };
 
+
+_EXT_DTCM1
 static void gps_probe_entry(void* parameter)
 {
     uint32_t baudrate;
@@ -525,6 +541,8 @@ static void gps_probe_entry(void* parameter)
     rt_free(parameter);
 }
 
+
+_EXT_DTCM1
 rt_err_t gps_m8n_init(const char* serial_device_name, const char* gps_device_name)
 {
     char* str_buffer;
