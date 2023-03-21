@@ -18,6 +18,7 @@
 #include "player.h"
 #include "song_data.h"
 #include <firmament.h>
+#include "board.h"
 
 #include "module/buzzer/buzzer.h"
 
@@ -52,6 +53,7 @@ struct decode_ops decode;
 uint8_t buzzer_volume = 3;
 
 /* 解码器的读操作接口 */
+_EXT_DTCM1
 int decode_read(void* song, int index, void* buffer, int size)
 {
     buzzer_song_get_data(song, index, buffer);
@@ -59,6 +61,7 @@ int decode_read(void* song, int index, void* buffer, int size)
     return 1;
 }
 /* 解码器的控制操作接口 */
+_EXT_DTCM1
 int decode_control(void* song, int cmd, void* arg)
 {
     if (cmd == DECODE_OPS_CMD_GET_NAME)
@@ -68,21 +71,29 @@ int decode_control(void* song, int cmd, void* arg)
 
     return 0;
 }
+
+_EXT_DTCM1
 int audio_init(void)
 {
     buzzer_init();
     return 0;
 }
+
+_EXT_DTCM1
 int audio_open(void)
 {
     buzzer_on();
     return 0;
 }
+
+_EXT_DTCM1
 int audio_close(void)
 {
     buzzer_off();
     return 0;
 }
+
+_EXT_DTCM1
 int audio_control(int cmd, void* arg)
 {
     if (cmd == AUDIO_OPS_CMD_SET_VOL)
@@ -90,6 +101,8 @@ int audio_control(int cmd, void* arg)
 
     return buzzer_volume;
 }
+
+_EXT_DTCM1
 int audio_write(void* buffer, int size)
 {
     struct buzzer_song_data* data = buffer;
@@ -103,6 +116,7 @@ int audio_write(void* buffer, int size)
     return size;
 }
 
+_EXT_DTCM1
 int player_init(void)
 {
     decode.init = buzzer_song_decode_init;
@@ -128,12 +142,14 @@ int player_init(void)
     return 0;
 }
 
+_EXT_DTCM1
 int buzzer_tune_init(void)
 {
     player_init();
     return 0;
 }
 
+_EXT_DTCM1
 int buzzer_tune_play(int tune)
 {
 
@@ -153,6 +169,7 @@ int buzzer_tune_play(int tune)
     return 0;
 }
 
+_EXT_DTCM1
 int buzzer_tune_add_play(int tune)
 {
 
@@ -165,6 +182,7 @@ int buzzer_tune_add_play(int tune)
     return 0;
 }
 
+_EXT_DTCM1
 int cmd_test_buzzer_play(void)
 {
 

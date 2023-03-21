@@ -16,10 +16,11 @@
 
 #include "hal/serial/serial.h"
 #include <firmament.h>
-
+#include "board.h"
 /*
  * Serial poll routines
  */
+_EXT_DTCM1
 rt_inline int _serial_poll_rx(struct serial_device* serial, rt_uint8_t* data, int length)
 {
     int ch;
@@ -53,6 +54,7 @@ rt_inline int _serial_poll_rx(struct serial_device* serial, rt_uint8_t* data, in
     return rx_length;
 }
 
+_EXT_DTCM1
 rt_inline int _serial_poll_tx(struct serial_device* serial, const rt_uint8_t* data, int length)
 {
     int size;
@@ -86,6 +88,7 @@ rt_inline int _serial_poll_tx(struct serial_device* serial, const rt_uint8_t* da
 /*
  * Serial interrupt routines
  */
+_EXT_DTCM1
 rt_inline int _serial_int_rx(struct serial_device* serial, rt_uint8_t* data, int length)
 {
     int size;
@@ -134,6 +137,7 @@ rt_inline int _serial_int_rx(struct serial_device* serial, rt_uint8_t* data, int
     return size - length;
 }
 
+_EXT_DTCM1
 rt_inline int _serial_int_tx(struct serial_device* serial, const rt_uint8_t* data, int length)
 {
     int size;
@@ -158,6 +162,7 @@ rt_inline int _serial_int_tx(struct serial_device* serial, const rt_uint8_t* dat
     return size - length;
 }
 
+_EXT_DTCM1
 static rt_size_t _serial_fifo_calc_recved_len(struct serial_device* serial)
 {
     struct serial_rx_fifo* rx_fifo = (struct serial_rx_fifo*)serial->serial_rx;
@@ -182,6 +187,7 @@ static rt_size_t _serial_fifo_calc_recved_len(struct serial_device* serial)
  *
  * @return length
  */
+_EXT_DTCM1
 static rt_size_t _dma_calc_recved_len(struct serial_device* serial)
 {
     return _serial_fifo_calc_recved_len(serial);
@@ -193,6 +199,7 @@ static rt_size_t _dma_calc_recved_len(struct serial_device* serial)
  * @param serial serial device
  * @param len get data length for this operate
  */
+_EXT_DTCM1
 static void _dma_recv_update_get_index(struct serial_device* serial, rt_size_t len)
 {
     struct serial_rx_fifo* rx_fifo = (struct serial_rx_fifo*)serial->serial_rx;
@@ -216,6 +223,7 @@ static void _dma_recv_update_get_index(struct serial_device* serial, rt_size_t l
  * @param serial serial device
  * @param len received length for this transmit
  */
+_EXT_DTCM1
 static void _dma_recv_update_put_index(struct serial_device* serial, rt_size_t len)
 {
     struct serial_rx_fifo* rx_fifo = (struct serial_rx_fifo*)serial->serial_rx;
@@ -259,6 +267,7 @@ static void _dma_recv_update_put_index(struct serial_device* serial, rt_size_t l
 /*
  * Serial DMA routines
  */
+_EXT_DTCM1
 rt_inline int _serial_dma_rx(struct serial_device* serial, rt_uint8_t* data, int length)
 {
     rt_base_t level;
@@ -291,6 +300,7 @@ rt_inline int _serial_dma_rx(struct serial_device* serial, rt_uint8_t* data, int
     return recv_len;
 }
 
+_EXT_DTCM1
 rt_inline int _serial_dma_tx(struct serial_device* serial, const rt_uint8_t* data, int length)
 {
     /* make a DMA transfer */
@@ -300,6 +310,7 @@ rt_inline int _serial_dma_tx(struct serial_device* serial, const rt_uint8_t* dat
 }
 
 /* ISR for serial interrupt */
+_EXT_DTCM1
 void hal_serial_isr(struct serial_device* serial, int event)
 {
     switch (event & 0xff) {
@@ -397,6 +408,7 @@ void hal_serial_isr(struct serial_device* serial, int event)
 /*
  * This function initializes serial device.
  */
+_EXT_DTCM1
 static rt_err_t hal_serial_init(struct rt_device* dev)
 {
     rt_err_t result = RT_EOK;
@@ -416,6 +428,7 @@ static rt_err_t hal_serial_init(struct rt_device* dev)
     return result;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_serial_open(struct rt_device* dev, rt_uint16_t oflag)
 {
     struct serial_device* serial;
@@ -478,6 +491,7 @@ static rt_err_t hal_serial_open(struct rt_device* dev, rt_uint16_t oflag)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_serial_close(struct rt_device* dev)
 {
     struct serial_device* serial;
@@ -531,6 +545,7 @@ static rt_err_t hal_serial_close(struct rt_device* dev)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_serial_read(struct rt_device* dev,
                                  rt_off_t pos,
                                  void* buffer,
@@ -554,6 +569,7 @@ static rt_size_t hal_serial_read(struct rt_device* dev,
     }
 }
 
+_EXT_DTCM1
 static rt_size_t hal_serial_write(struct rt_device* dev,
                                   rt_off_t pos,
                                   const void* buffer,
@@ -575,6 +591,7 @@ static rt_size_t hal_serial_write(struct rt_device* dev,
     }
 }
 
+_EXT_DTCM1
 static rt_err_t hal_serial_control(struct rt_device* dev,
                                    int cmd,
                                    void* args)
@@ -631,6 +648,7 @@ static rt_err_t hal_serial_control(struct rt_device* dev,
 /*
  * serial register
  */
+_EXT_DTCM1
 rt_err_t hal_serial_register(struct serial_device* serial,
                              const char* name,
                              rt_uint32_t flag,

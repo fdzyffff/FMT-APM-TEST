@@ -10,6 +10,7 @@
   */
 
 #include "decode.h"
+#include "board.h"
 //原始频率表 CDEFGAB
 static const uint16_t freq_tab[12] = { 262, 277, 294, 311, 330, 349, 369, 392, 415, 440, 466, 494 };
 //1~7在频率表中的位置
@@ -21,6 +22,8 @@ static rt_uint16_t freq_tab_new[12];
 
 //signature|调号(0-11)       :  是指乐曲升多少个半音演奏;
 //octachord|升降八度(-2到+2) :  < 0 降几个八度; > 0 升几个八度
+
+_EXT_DTCM1
 static int buzzer_song_decode_new_freq(rt_uint8_t signature, rt_int8_t octachord)
 {
     uint8_t i, j;
@@ -46,6 +49,7 @@ static int buzzer_song_decode_new_freq(rt_uint8_t signature, rt_int8_t octachord
     return 0;
 }
 
+_EXT_DTCM1
 static int buzzer_song_decode(rt_uint16_t tone, rt_uint16_t length, rt_uint16_t* freq, rt_uint16_t* sound_len, rt_uint16_t* nosound_len)
 {
     static const rt_uint16_t div0_len = SEMIBREVE_LEN; // 全音符的长度(ms)
@@ -101,6 +105,7 @@ static int buzzer_song_decode(rt_uint16_t tone, rt_uint16_t length, rt_uint16_t*
     return 0;
 }
 
+_EXT_DTCM1
 uint16_t buzzer_song_get_len(const struct buzzer_song* song)
 {
     uint16_t cnt = 0;
@@ -113,6 +118,7 @@ uint16_t buzzer_song_get_len(const struct buzzer_song* song)
     return cnt / 2;
 }
 
+_EXT_DTCM1
 int buzzer_song_get_name(const struct buzzer_song* song, char* name)
 {
     int i = 0;
@@ -126,12 +132,14 @@ int buzzer_song_get_name(const struct buzzer_song* song, char* name)
     return 0;
 }
 
+_EXT_DTCM1
 uint16_t buzzer_song_get_data(const struct buzzer_song* song, uint16_t index, struct buzzer_song_data* data)
 {
     buzzer_song_decode(song->data[index * 2], song->data[index * 2 + 1], &data->freq, &data->sound_len, &data->nosound_len);
     return 2;
 }
 
+_EXT_DTCM1
 int buzzer_song_decode_init(void)
 {
     buzzer_song_decode_new_freq(SOUND_SIGNATURE, SOUND_OCTACHORD);

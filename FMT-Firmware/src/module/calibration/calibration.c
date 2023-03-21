@@ -10,6 +10,7 @@
 #include "rt_nonfinite.h"
 #include <math.h>
 #include <string.h>
+#include "board/board.h"
 
 /* Function Declarations */
 static void b_sqrt(double* x);
@@ -56,6 +57,7 @@ static void xztgevc(const creal_T A[9], creal_T V[9]);
  * Arguments    : double *x
  * Return Type  : void
  */
+_EXT_DTCM1
 static void b_sqrt(double* x)
 {
     *x = sqrt(*x);
@@ -66,6 +68,7 @@ static void b_sqrt(double* x)
  *                double U[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void b_svd(const creal_T A[9], double U[3])
 {
     creal_T b_A[9];
@@ -1247,6 +1250,7 @@ static void b_svd(const creal_T A[9], double U[3])
  *                int iy0
  * Return Type  : void
  */
+_EXT_DTCM1
 static void b_xaxpy(int n, const creal_T a, const creal_T x[9], int ix0, creal_T y[3], int iy0)
 {
     int ix;
@@ -1274,6 +1278,7 @@ static void b_xaxpy(int n, const creal_T a, const creal_T x[9], int ix0, creal_T
  *                const double x[3]
  * Return Type  : double
  */
+_EXT_DTCM1
 static double b_xnrm2(int n, const double x[3])
 {
     double y;
@@ -1318,6 +1323,7 @@ static double b_xnrm2(int n, const double x[3])
  *                creal_T *sn
  * Return Type  : void
  */
+_EXT_DTCM1
 static void b_xzlartg(const creal_T f, const creal_T g, double* cs, creal_T* sn)
 {
     double y_tmp;
@@ -1444,6 +1450,7 @@ static void b_xzlartg(const creal_T f, const creal_T g, double* cs, creal_T* sn)
  * Arguments    : creal_T *x
  * Return Type  : void
  */
+_EXT_DTCM1
 static void c_sqrt(creal_T* x)
 {
     double xr;
@@ -1528,6 +1535,7 @@ static void c_sqrt(creal_T* x)
  *                int iy0
  * Return Type  : void
  */
+_EXT_DTCM1
 static void c_xaxpy(int n, const creal_T a, const creal_T x[3], int ix0, creal_T y[9], int iy0)
 {
     int ix;
@@ -1556,6 +1564,7 @@ static void c_xaxpy(int n, const creal_T a, const creal_T x[3], int ix0, creal_T
  *                int ix0
  * Return Type  : double
  */
+_EXT_DTCM1
 static double c_xnrm2(int n, const creal_T x[9], int ix0)
 {
     double y;
@@ -1610,6 +1619,7 @@ static double c_xnrm2(int n, const creal_T x[9], int ix0)
  *                int ix0
  * Return Type  : double
  */
+_EXT_DTCM1
 static double d_xnrm2(int n, const creal_T x[3], int ix0)
 {
     double y;
@@ -1664,6 +1674,7 @@ static double d_xnrm2(int n, const creal_T x[3], int ix0)
  *                double Y[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void mldivide(const double A[9], const double B[3], double Y[3])
 {
     double b_A[9];
@@ -1722,6 +1733,7 @@ static void mldivide(const double A[9], const double B[3], double Y[3])
  *                double u1
  * Return Type  : double
  */
+_EXT_DTCM1
 static double rt_hypotd_snf(double u0, double u1)
 {
     double y;
@@ -1751,6 +1763,7 @@ static double rt_hypotd_snf(double u0, double u1)
  *                creal_T T[9]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void schur(const double A[9], creal_T V[9], creal_T T[9])
 {
     boolean_T p;
@@ -2229,6 +2242,7 @@ static void schur(const double A[9], creal_T V[9], creal_T T[9])
  *                creal_T V[9]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void svd(const creal_T A[9], creal_T U[9], double s[3], creal_T V[9])
 {
     creal_T b_A[9];
@@ -3543,6 +3557,7 @@ static void svd(const creal_T A[9], creal_T U[9], double s[3], creal_T V[9])
  *                int iy0
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xaxpy(int n, const creal_T a, int ix0, creal_T y[9], int iy0)
 {
     int ix;
@@ -3580,6 +3595,7 @@ static void xaxpy(int n, const creal_T a, int ix0, creal_T y[9], int iy0)
  *                double *sn
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xdlanv2(double* a, double* b, double* c, double* d, double* rt1r,
                     double* rt1i, double* rt2r, double* rt2i, double* cs, double* sn)
 {
@@ -3746,6 +3762,7 @@ static void xdlanv2(double* a, double* b, double* c, double* d, double* rt1r,
  *                int iy0
  * Return Type  : creal_T
  */
+_EXT_DTCM1
 static creal_T xdotc(int n, const creal_T x[9], int ix0, const creal_T y[9], int iy0)
 {
     creal_T d;
@@ -3780,6 +3797,7 @@ static creal_T xdotc(int n, const creal_T x[9], int ix0, const creal_T y[9], int
  *                double y[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xgemv(int m, int n, const double A[9], int ia0, const double x[9],
                   int ix0, double y[3])
 {
@@ -3826,6 +3844,7 @@ static void xgemv(int m, int n, const double A[9], int ia0, const double x[9],
  *                int ia0
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xgerc(int m, int n, double alpha1, int ix0, const double y[3],
                   double A[9], int ia0)
 {
@@ -3866,6 +3885,7 @@ static void xgerc(int m, int n, double alpha1, int ix0, const double y[3],
  *                double z[9]
  * Return Type  : int
  */
+_EXT_DTCM1
 static int xhseqr(double h[9], double z[9])
 {
     int info;
@@ -4233,6 +4253,7 @@ static int xhseqr(double h[9], double z[9])
  *                int ix0
  * Return Type  : double
  */
+_EXT_DTCM1
 static double xnrm2(int n, const double x[9], int ix0)
 {
     double y;
@@ -4278,6 +4299,7 @@ static double xnrm2(int n, const double x[9], int ix0)
  *                double s
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xrot(creal_T x[9], int ix0, int iy0, double c, double s)
 {
     int ix;
@@ -4321,6 +4343,7 @@ static void xrot(creal_T x[9], int ix0, int iy0, double c, double s)
  *                double *s
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xrotg(double* a, double* b, double* c, double* s)
 {
     double roe;
@@ -4374,6 +4397,7 @@ static void xrotg(double* a, double* b, double* c, double* s)
  *                int iy0
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xswap(creal_T x[9], int ix0, int iy0)
 {
     int ix;
@@ -4411,6 +4435,7 @@ static void xswap(creal_T x[9], int ix0, int iy0)
  *                creal_T V[9]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xzggev(creal_T A[9], int* info, creal_T alpha1[3], creal_T beta1[3],
                    creal_T V[9])
 {
@@ -4868,6 +4893,7 @@ static void xzggev(creal_T A[9], int* info, creal_T alpha1[3], creal_T beta1[3],
  *                creal_T beta1[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xzhgeqz(creal_T A[9], int ilo, int ihi, creal_T Z[9], int* info,
                     creal_T alpha1[3], creal_T beta1[3])
 {
@@ -5314,6 +5340,7 @@ static void xzhgeqz(creal_T A[9], int ilo, int ihi, creal_T Z[9], int* info,
  *                int ihi
  * Return Type  : double
  */
+_EXT_DTCM1
 static double xzlanhs(const creal_T A[9], int ilo, int ihi)
 {
     double f;
@@ -5396,6 +5423,7 @@ static double xzlanhs(const creal_T A[9], int ilo, int ihi)
  *                double work[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xzlarf(int m, int n, int iv0, double tau, double C[9], int ic0,
                    double work[3])
 {
@@ -5458,6 +5486,7 @@ static void xzlarf(int m, int n, int iv0, double tau, double C[9], int ic0,
  *                double x[3]
  * Return Type  : double
  */
+_EXT_DTCM1
 static double xzlarfg(int n, double* alpha1, double x[3])
 {
     double tau;
@@ -5533,6 +5562,7 @@ static double xzlarfg(int n, double* alpha1, double x[3])
  *                creal_T *r
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xzlartg(const creal_T f, const creal_T g, double* cs, creal_T* sn,
                     creal_T* r)
 {
@@ -5688,6 +5718,7 @@ static void xzlartg(const creal_T f, const creal_T g, double* cs, creal_T* sn,
  *                creal_T V[9]
  * Return Type  : void
  */
+_EXT_DTCM1
 static void xztgevc(const creal_T A[9], creal_T V[9])
 {
     double rworka[3];
@@ -6012,6 +6043,7 @@ static void xztgevc(const creal_T A[9], creal_T V[9])
  * Arguments    : void
  * Return Type  : void
  */
+_EXT_DTCM1
 void calibration_initialize(void)
 {
     rt_InitInfAndNaN_(8U);
@@ -6021,6 +6053,7 @@ void calibration_initialize(void)
  * Arguments    : void
  * Return Type  : void
  */
+_EXT_DTCM1
 void calibration_terminate(void)
 {
     /* (no terminate code required) */
@@ -6034,6 +6067,7 @@ void calibration_terminate(void)
  *                creal_T radii[3]
  * Return Type  : void
  */
+_EXT_DTCM1
 void ellipsoid_fit_solve(const double v[9], creal_T mat[9], double bias[3],
                          double u[9], creal_T radii[3])
 {
@@ -6864,6 +6898,7 @@ void ellipsoid_fit_solve(const double v[9], creal_T mat[9], double bias[3],
  *                double next_P[81]
  * Return Type  : void
  */
+_EXT_DTCM1
 void ellipsoid_fit_step(double x, double y, double z, const double v[9], const double P[81], double R, double next_v[9], double next_P[81])
 {
     double H[9];

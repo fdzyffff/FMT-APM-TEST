@@ -15,9 +15,10 @@
  *****************************************************************************/
 
 #include <firmament.h>
-
+#include "board.h"
 #include "hal/rc/rc.h"
 
+_EXT_DTCM1
 static rt_err_t hal_rc_init(struct rt_device* dev)
 {
     rt_err_t ret = RT_EOK;
@@ -35,6 +36,8 @@ static rt_err_t hal_rc_init(struct rt_device* dev)
     return ret;
 }
 
+
+_EXT_DTCM1
 static rt_size_t hal_rc_read(struct rt_device* dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     rc_dev_t rc;
@@ -75,6 +78,8 @@ static rt_size_t hal_rc_read(struct rt_device* dev, rt_off_t pos, void* buffer, 
     return rb;
 }
 
+
+_EXT_DTCM1
 static rt_err_t hal_rc_control(struct rt_device* dev, int cmd, void* args)
 {
     rc_dev_t rc;
@@ -107,6 +112,8 @@ static rt_err_t hal_rc_control(struct rt_device* dev, int cmd, void* args)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_rc_rx_ind(rc_dev_t rc, rt_size_t size)
 {
     rt_device_t device = &(rc->parent);
@@ -118,6 +125,8 @@ rt_err_t hal_rc_rx_ind(rc_dev_t rc, rt_size_t size)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_rc_register(rc_dev_t rc, const char* name, rt_uint32_t flag, void* data)
 {
     struct rt_device* device;

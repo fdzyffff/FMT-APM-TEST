@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 #include <firmament.h>
-
+#include "board.h"
 #include "hal/sd/sd.h"
 
 #define SECTOR_SIZE RT_DFS_ELM_MAX_SECTOR_SIZE
@@ -22,6 +22,8 @@
 /* local sector buffer */
 static uint32_t sector_buffer[SECTOR_SIZE / 4];
 
+
+_EXT_DTCM1
 static rt_err_t hal_sd_init(rt_device_t dev)
 {
     rt_err_t ret = RT_EOK;
@@ -38,6 +40,7 @@ static rt_err_t hal_sd_init(rt_device_t dev)
     return ret;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_sd_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     uint32_t sector = pos;
@@ -78,6 +81,7 @@ static rt_size_t hal_sd_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_siz
     return size;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_sd_write(rt_device_t dev, rt_off_t pos, const void* buffer, rt_size_t size)
 {
     uint32_t sector = pos;
@@ -116,6 +120,7 @@ static rt_size_t hal_sd_write(rt_device_t dev, rt_off_t pos, const void* buffer,
     return size;
 }
 
+_EXT_DTCM1
 rt_err_t hal_sd_control(rt_device_t dev, int cmd, void* args)
 {
     rt_err_t ret = RT_EOK;
@@ -135,6 +140,7 @@ rt_err_t hal_sd_control(rt_device_t dev, int cmd, void* args)
     return ret;
 }
 
+_EXT_DTCM1
 rt_err_t hal_sd_register(sd_dev_t sd, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;

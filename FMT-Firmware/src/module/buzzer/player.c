@@ -10,9 +10,11 @@
 */
 
 #include <rthw.h>
-
+#include "board.h"
 #include "player.h"
 
+
+_EXT_DTCM1
 int player_play(player_t player)
 {
     rt_uint32_t level;
@@ -34,6 +36,7 @@ int player_play(player_t player)
     return 0;
 }
 
+_EXT_DTCM1
 int player_stop(player_t player)
 {
     rt_uint32_t level;
@@ -55,6 +58,7 @@ int player_stop(player_t player)
     return 0;
 }
 
+_EXT_DTCM1
 int player_last(player_t player)
 {
     uint16_t len;
@@ -93,6 +97,7 @@ int player_last(player_t player)
     return 0;
 }
 
+_EXT_DTCM1
 int player_next(player_t player)
 {
     uint16_t len;
@@ -132,6 +137,8 @@ int player_next(player_t player)
 
     return 0;
 }
+
+_EXT_DTCM1
 int player_control(player_t player, int cmd, void* arg)
 {
     rt_uint32_t level;
@@ -173,6 +180,8 @@ int player_control(player_t player, int cmd, void* arg)
 
     return 0;
 }
+
+_EXT_DTCM1
 int player_add_song(player_t player, void* song)
 {
     rt_uint32_t level;
@@ -193,6 +202,7 @@ int player_add_song(player_t player, void* song)
     return 0;
 }
 
+_EXT_DTCM1
 int player_show(player_t player)
 {
     char name[PLAYER_SONG_NAME_LEN_MAX + 1];
@@ -228,6 +238,7 @@ int player_show(player_t player)
     return 0;
 }
 
+_EXT_DTCM1
 static void player_entry(void* parameter)
 {
     player_t player = (player_t)parameter;
@@ -267,6 +278,7 @@ static void player_entry(void* parameter)
     }
 }
 
+_EXT_DTCM1
 int player_start(player_t player)
 {
     uint16_t len;

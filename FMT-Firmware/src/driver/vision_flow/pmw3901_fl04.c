@@ -15,6 +15,7 @@
  *****************************************************************************/
 
 #include <firmament.h>
+#include "board.h"
 
 #include "hal/i2c/i2c.h"
 #include "hal/i2c/i2c_dev.h"
@@ -57,16 +58,19 @@ static uint8_t* pdata = (uint8_t*)&data;
 static optflow_data_t optflow_report;
 static rf_data_t rf_report;
 
+_EXT_DTCM1
 static void start_thread(void* parameter)
 {
     RT_CHECK(rt_thread_startup(thread));
 }
 
+_EXT_DTCM1
 static rt_err_t rx_ind_cb(rt_device_t dev, rt_size_t size)
 {
     return rt_event_send(&event, EVENT_FL04_UPDATE);
 }
 
+_EXT_DTCM1
 static bool parse_package(uint8_t c)
 {
     static FL04_State state;
@@ -146,6 +150,8 @@ static bool parse_package(uint8_t c)
     return cmplt;
 }
 
+
+_EXT_DTCM1
 static void thread_entry(void* args)
 {
     rt_err_t res;
@@ -201,6 +207,8 @@ static struct WorkItem work_item = {
     .run = start_thread
 };
 
+
+_EXT_DTCM1
 rt_err_t pmw3901_fl04_drv_init(const char* uart_dev_name)
 {
     dev = rt_device_find(uart_dev_name);

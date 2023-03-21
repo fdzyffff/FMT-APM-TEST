@@ -14,12 +14,14 @@
  * limitations under the License.
  *****************************************************************************/
 #include <firmament.h>
+#include "board.h"
 
 #include "hal/airspeed/airspeed.h"
 #include "hal/i2c/i2c.h"
 
 static rt_device_t i2c_dev;
 
+_EXT_DTCM1
 static rt_err_t ms4525_collect(uint8_t* val)
 {
     struct rt_i2c_msg msgs;
@@ -56,6 +58,8 @@ static rt_err_t ms4525_collect(uint8_t* val)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 static rt_err_t ms4525_init(void)
 {
     uint8_t val[4];
@@ -72,6 +76,8 @@ static rt_err_t ms4525_init(void)
     return RT_ERROR;
 }
 
+
+_EXT_DTCM1
 rt_size_t ms4525_read(airspeed_dev_t dev, rt_off_t pos, void* data, rt_size_t size)
 {
     uint8_t val[4];
@@ -124,6 +130,8 @@ const static struct airspeed_ops __airspeed_ops = {
     .dev_read = ms4525_read
 };
 
+
+_EXT_DTCM1
 rt_err_t drv_ms4525_init(const char* i2c_device_name, const char* device_name)
 {
     static struct airspeed_device airspeed_dev = {

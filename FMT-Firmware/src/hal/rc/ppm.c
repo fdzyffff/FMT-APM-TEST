@@ -16,6 +16,7 @@
 
 #include <firmament.h>
 #include <string.h>
+#include "board.h"
 
 #include "hal/rc/ppm.h"
 
@@ -25,6 +26,8 @@
 // static uint8_t ppm_recvd;
 static float scale_us = 1000000.0f / PPM_DECODER_FREQUENCY;
 
+
+_EXT_DTCM1
 void ppm_update(ppm_decoder_t* decoder, uint32_t ic_val)
 {
     static uint16_t temp_val[MAX_PPM_CHANNEL];
@@ -77,6 +80,8 @@ void ppm_update(ppm_decoder_t* decoder, uint32_t ic_val)
 //     return decoder->total_chan;
 // }
 
+
+_EXT_DTCM1
 rt_err_t ppm_decoder_init(ppm_decoder_t* decoder)
 {
     decoder->chan_id = 0;

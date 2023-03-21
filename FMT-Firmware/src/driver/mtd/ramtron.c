@@ -1,4 +1,5 @@
 #include <firmament.h>
+#include "board.h"
 
 #include "hal/mtd/mtd.h"
 #include "hal/spi/spi.h"
@@ -33,6 +34,7 @@ static rt_device_t ramtron_spi_dev;
 static struct mtd_device ramtron_dev;
 static struct rt_device_blk_geometry geometry;
 
+_EXT_DTCM1
 static void ramtron_wren(void)
 {
     uint8_t code = RAMTRON_WREN;
@@ -40,6 +42,7 @@ static void ramtron_wren(void)
     rt_spi_send((struct rt_spi_device*)ramtron_spi_dev, &code, 1);
 }
 
+_EXT_DTCM1
 static int ramtron_wait_writecplt(void)
 {
     uint8_t sr;
@@ -52,6 +55,8 @@ static int ramtron_wait_writecplt(void)
     return retries;
 }
 
+
+_EXT_DTCM1
 static rt_err_t ramtron_read_devinfo(void)
 {
     uint8_t id[9];
@@ -104,6 +109,7 @@ static rt_err_t ramtron_read_devinfo(void)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t ramtron_read(mtd_dev_t mtd, rt_uint8_t* buffer, rt_uint32_t sector, rt_uint32_t count)
 {
     uint8_t code = RAMTRON_READ;
@@ -142,6 +148,7 @@ rt_err_t ramtron_read(mtd_dev_t mtd, rt_uint8_t* buffer, rt_uint32_t sector, rt_
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t ramtron_write(mtd_dev_t mtd, const rt_uint8_t* buffer, rt_uint32_t sector, rt_uint32_t count)
 {
     uint8_t code = RAMTRON_WRITE;
@@ -188,6 +195,8 @@ rt_err_t ramtron_write(mtd_dev_t mtd, const rt_uint8_t* buffer, rt_uint32_t sect
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 rt_err_t ramtron_control(mtd_dev_t mtd, int cmd, void* arg)
 {
     switch (cmd) {
@@ -216,6 +225,8 @@ const static struct mtd_ops dev_ops = {
     .control = ramtron_control
 };
 
+
+_EXT_DTCM1
 rt_err_t drv_ramtron_init(const char* spi_device_name)
 {
     ramtron_spi_dev = rt_device_find(spi_device_name);

@@ -16,7 +16,9 @@
 
 #include "hal/pin/pin.h"
 #include <firmament.h>
+#include "board.h"
 
+_EXT_DTCM1
 static rt_size_t hal_pin_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     struct device_pin_status* status;
@@ -34,6 +36,7 @@ static rt_size_t hal_pin_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_si
     return size;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_pin_write(rt_device_t dev, rt_off_t pos, const void* buffer, rt_size_t size)
 {
     struct device_pin_status* status;
@@ -52,6 +55,7 @@ static rt_size_t hal_pin_write(rt_device_t dev, rt_off_t pos, const void* buffer
     return size;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_pin_control(rt_device_t dev, int cmd, void* args)
 {
     struct device_pin_mode* mode;
@@ -70,6 +74,7 @@ static rt_err_t hal_pin_control(rt_device_t dev, int cmd, void* args)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t hal_pin_register(pin_dev_t pin, const char* name, rt_uint32_t flag, void* data)
 {
     struct rt_device* device;

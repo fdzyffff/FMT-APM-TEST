@@ -16,7 +16,9 @@
 
 #include "hal/systick/systick.h"
 #include <firmament.h>
+#include "board.h"
 
+_EXT_DTCM1
 rt_size_t systick_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     RT_ASSERT(dev != RT_NULL);
@@ -32,6 +34,8 @@ rt_size_t systick_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t si
     return 0;
 }
 
+
+_EXT_DTCM1
 static rt_err_t systick_control(rt_device_t dev, int cmd, void* args)
 {
     systick_dev_t systick;
@@ -52,6 +56,7 @@ static rt_err_t systick_control(rt_device_t dev, int cmd, void* args)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 void hal_systick_isr(systick_dev_t systick)
 {
     if (systick->systick_isr_cb) {
@@ -59,6 +64,8 @@ void hal_systick_isr(systick_dev_t systick)
     }
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_systick_register(systick_dev_t systick, const char* name, rt_uint32_t flag, void* data)
 {
     struct rt_device* device;

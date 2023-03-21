@@ -15,9 +15,11 @@
  *****************************************************************************/
 
 #include "hal/adc/adc.h"
+#include "board.h"
 
 #define ADC_TIMEOUT_MS 5
 
+_EXT_DTCM1
 rt_err_t hal_adc_open(rt_device_t dev, rt_uint16_t oflag)
 {
     RT_ASSERT(dev != NULL);
@@ -31,6 +33,8 @@ rt_err_t hal_adc_open(rt_device_t dev, rt_uint16_t oflag)
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_adc_close(rt_device_t dev)
 {
     RT_ASSERT(dev != NULL);
@@ -44,6 +48,7 @@ rt_err_t hal_adc_close(rt_device_t dev)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_size_t hal_adc_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     RT_ASSERT(dev != NULL);
@@ -64,6 +69,8 @@ rt_size_t hal_adc_read(rt_device_t dev, rt_off_t pos, void* buffer, rt_size_t si
     return res;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_adc_register(adc_dev_t adc_dev, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;

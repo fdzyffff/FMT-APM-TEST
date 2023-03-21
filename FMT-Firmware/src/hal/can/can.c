@@ -1,6 +1,8 @@
 #include "hal/can/can.h"
 #include <firmament.h>
+#include "board.h"
 
+_EXT_DTCM1
 static rt_err_t hal_can_init(struct rt_device* dev)
 {
     rt_err_t result = RT_EOK;
@@ -17,6 +19,8 @@ static rt_err_t hal_can_init(struct rt_device* dev)
     return result;
 }
 
+
+_EXT_DTCM1
 static rt_size_t hal_can_write(rt_device_t dev,
                                rt_off_t pos,
                                const void* buffer,
@@ -34,6 +38,8 @@ static rt_size_t hal_can_write(rt_device_t dev,
     return can_dev->ops->sendmsg(can_dev, buffer);
 }
 
+
+_EXT_DTCM1
 static rt_size_t hal_can_read(rt_device_t dev,
                               rt_off_t pos,
                               void* buffer,
@@ -52,6 +58,8 @@ static rt_size_t hal_can_read(rt_device_t dev,
 /*
  * can register
  */
+
+_EXT_DTCM1
 rt_err_t hw_can_register(can_device* can,
                          const char* name,
                          rt_uint32_t flag,

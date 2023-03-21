@@ -16,7 +16,9 @@
 
 #include "hal/barometer/barometer.h"
 #include <firmament.h>
+#include "board.h"
 
+_EXT_DTCM1
 static rt_size_t hal_baro_read(struct rt_device* dev,
                                rt_off_t pos,
                                void* buffer,
@@ -37,6 +39,8 @@ static rt_size_t hal_baro_read(struct rt_device* dev,
     return rb;
 }
 
+
+_EXT_DTCM1
 static rt_err_t hal_baro_control(struct rt_device* dev,
                                  int cmd,
                                  void* args)
@@ -55,6 +59,7 @@ static rt_err_t hal_baro_control(struct rt_device* dev,
     return ret;
 }
 
+_EXT_DTCM1
 rt_err_t hal_baro_register(baro_dev_t baro, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;

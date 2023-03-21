@@ -14,9 +14,10 @@
  * limitations under the License.
  *****************************************************************************/
 #include <firmament.h>
-
+#include "board.h"
 #include "hal/airspeed/airspeed.h"
 
+_EXT_DTCM1
 static rt_size_t hal_airspeed_read(struct rt_device* dev,
                                    rt_off_t pos,
                                    void* buffer,
@@ -36,6 +37,8 @@ static rt_size_t hal_airspeed_read(struct rt_device* dev,
     return rb;
 }
 
+
+_EXT_DTCM1
 static rt_err_t hal_airspeed_control(struct rt_device* dev,
                                      int cmd,
                                      void* args)
@@ -54,6 +57,7 @@ static rt_err_t hal_airspeed_control(struct rt_device* dev,
     return ret;
 }
 
+_EXT_DTCM1
 rt_err_t hal_airspeed_register(airspeed_dev_t dev, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;

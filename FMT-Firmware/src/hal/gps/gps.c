@@ -14,9 +14,10 @@
  * limitations under the License.
  *****************************************************************************/
 #include <firmament.h>
-
+#include "board.h"
 #include "hal/gps/gps.h"
 
+_EXT_DTCM1
 static rt_err_t hal_gps_init(rt_device_t dev)
 {
     rt_err_t ret = RT_EOK;
@@ -33,6 +34,7 @@ static rt_err_t hal_gps_init(rt_device_t dev)
     return ret;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_gps_open(rt_device_t dev, rt_uint16_t oflag)
 {
     rt_err_t ret = RT_EOK;
@@ -49,6 +51,7 @@ static rt_err_t hal_gps_open(rt_device_t dev, rt_uint16_t oflag)
     return ret;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_gps_close(rt_device_t dev)
 {
     rt_err_t ret = RT_EOK;
@@ -65,6 +68,7 @@ static rt_err_t hal_gps_close(rt_device_t dev)
     return ret;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_gps_read(struct rt_device* dev,
                               rt_off_t pos,
                               void* buffer,
@@ -85,6 +89,7 @@ static rt_size_t hal_gps_read(struct rt_device* dev,
     return rb;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_gps_control(struct rt_device* dev,
                                 int cmd,
                                 void* args)
@@ -103,6 +108,7 @@ static rt_err_t hal_gps_control(struct rt_device* dev,
     return ret;
 }
 
+_EXT_DTCM1
 rt_err_t hal_gps_register(gps_dev_t gps_dev, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;

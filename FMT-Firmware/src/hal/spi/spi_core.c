@@ -43,7 +43,9 @@
  * limitations under the License.
  *****************************************************************************/
 #include "hal/spi/spi.h"
+#include "board.h"
 
+_EXT_DTCM1
 rt_err_t rt_spi_bus_register(struct rt_spi_bus* bus,
                              const char* name,
                              const struct rt_spi_ops* ops)
@@ -65,6 +67,7 @@ rt_err_t rt_spi_bus_register(struct rt_spi_bus* bus,
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_bus_attach_device(struct rt_spi_device* device,
                                   const char* name,
                                   const char* bus_name,
@@ -95,6 +98,8 @@ rt_err_t rt_spi_bus_attach_device(struct rt_spi_device* device,
     return -RT_ERROR;
 }
 
+
+_EXT_DTCM1
 rt_err_t rt_spi_configure(struct rt_spi_device* device,
                           struct rt_spi_configuration* cfg)
 {
@@ -123,6 +128,7 @@ rt_err_t rt_spi_configure(struct rt_spi_device* device,
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_send_then_send(struct rt_spi_device* device,
                                const void* send_buf1,
                                rt_size_t send_length1,
@@ -193,6 +199,7 @@ __exit:
     return result;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_send_then_recv(struct rt_spi_device* device,
                                const void* send_buf,
                                rt_size_t send_length,
@@ -263,6 +270,7 @@ __exit:
     return result;
 }
 
+_EXT_DTCM1
 rt_size_t rt_spi_transfer(struct rt_spi_device* device,
                           const void* send_buf,
                           void* recv_buf,
@@ -319,6 +327,7 @@ __exit:
     return result;
 }
 
+_EXT_DTCM1
 struct rt_spi_message* rt_spi_transfer_message(struct rt_spi_device* device,
                                                struct rt_spi_message* message)
 {
@@ -380,6 +389,7 @@ __exit:
     return index;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_take_bus(struct rt_spi_device* device)
 {
     rt_err_t result = RT_EOK;
@@ -419,6 +429,7 @@ rt_err_t rt_spi_take_bus(struct rt_spi_device* device)
     return result;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_release_bus(struct rt_spi_device* device)
 {
     RT_ASSERT(device != RT_NULL);
@@ -431,6 +442,7 @@ rt_err_t rt_spi_release_bus(struct rt_spi_device* device)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_take(struct rt_spi_device* device)
 {
     rt_err_t result;
@@ -447,6 +459,7 @@ rt_err_t rt_spi_take(struct rt_spi_device* device)
     return result;
 }
 
+_EXT_DTCM1
 rt_err_t rt_spi_release(struct rt_spi_device* device)
 {
     rt_err_t result;

@@ -15,9 +15,11 @@
  *****************************************************************************/
 
 #include "hal/actuator/actuator.h"
+#include "board.h"
 
 static rt_bool_t dev_suspend;
 
+_EXT_DTCM1
 static rt_err_t hal_actuator_init(struct rt_device* dev)
 {
     RT_ASSERT(dev != RT_NULL);
@@ -32,6 +34,7 @@ static rt_err_t hal_actuator_init(struct rt_device* dev)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_actuator_control(struct rt_device* dev, int cmd, void* args)
 {
     RT_ASSERT(dev != RT_NULL);
@@ -56,16 +59,19 @@ static rt_err_t hal_actuator_control(struct rt_device* dev, int cmd, void* args)
     return RT_EOK;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_actuator_open(rt_device_t dev, rt_uint16_t oflag)
 {
     return hal_actuator_control(dev, ACT_CMD_CHANNEL_ENABLE, NULL);
 }
 
+_EXT_DTCM1
 static rt_err_t hal_actuator_close(rt_device_t dev)
 {
     return hal_actuator_control(dev, ACT_CMD_CHANNEL_DISABLE, NULL);
 }
 
+_EXT_DTCM1
 static rt_size_t hal_actuator_read(struct rt_device* dev, rt_off_t pos, void* buffer, rt_size_t size)
 {
     RT_ASSERT(dev != RT_NULL);
@@ -87,6 +93,7 @@ static rt_size_t hal_actuator_read(struct rt_device* dev, rt_off_t pos, void* bu
     return rb;
 }
 
+_EXT_DTCM1
 static rt_size_t hal_actuator_write(rt_device_t dev, rt_off_t pos, const void* buffer, rt_size_t size)
 {
     RT_ASSERT(dev != RT_NULL);
@@ -118,6 +125,8 @@ static rt_size_t hal_actuator_write(rt_device_t dev, rt_off_t pos, const void* b
     return wb;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_actuator_register(actuator_dev_t dev, const char* name, rt_uint32_t flag, void* data)
 {
     RT_ASSERT(dev != RT_NULL);

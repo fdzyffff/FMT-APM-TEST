@@ -38,7 +38,9 @@
  *****************************************************************************/
 #include "hal/spi/spi.h"
 #include <firmament.h>
+#include "board.h"
 
+_EXT_DTCM1
 rt_err_t rt_spi_bus_init(struct rt_spi_bus* bus, const char* name)
 {
     struct rt_device* device;
@@ -60,7 +62,10 @@ rt_err_t rt_spi_bus_init(struct rt_spi_bus* bus, const char* name)
     return rt_device_register(device, name, RT_DEVICE_FLAG_RDWR);
 }
 
+
+
 /* SPI Dev device interface, compatible with RT-Thread 0.3.x/1.0.x */
+_EXT_DTCM1
 static rt_size_t spi_bus_read(rt_device_t dev,
                               rt_off_t pos,
                               void* buffer,
@@ -75,6 +80,8 @@ static rt_size_t spi_bus_read(rt_device_t dev,
     return rt_spi_transfer(device, RT_NULL, buffer, size);
 }
 
+
+_EXT_DTCM1
 static rt_size_t spi_bus_write(rt_device_t dev,
                                rt_off_t pos,
                                const void* buffer,
@@ -89,6 +96,7 @@ static rt_size_t spi_bus_write(rt_device_t dev,
     return rt_spi_transfer(device, buffer, RT_NULL, size);
 }
 
+_EXT_DTCM1
 static rt_err_t spi_bus_control(rt_device_t dev,
                                 int cmd,
                                 void* args)
@@ -104,6 +112,8 @@ static rt_err_t spi_bus_control(rt_device_t dev,
     return RT_EOK;
 }
 
+
+_EXT_DTCM1
 rt_err_t rt_spi_device_init(struct rt_spi_device* dev, const char* name)
 {
     struct rt_device* device;

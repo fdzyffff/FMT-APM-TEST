@@ -16,7 +16,10 @@
 
 #include "hal/gyro/gyro.h"
 #include <firmament.h>
+#include "board.h"
 
+
+_EXT_DTCM1
 static rt_err_t hal_gyro_init(struct rt_device* dev)
 {
     rt_err_t ret = RT_EOK;
@@ -33,6 +36,8 @@ static rt_err_t hal_gyro_init(struct rt_device* dev)
     return ret;
 }
 
+
+_EXT_DTCM1
 static rt_size_t hal_gyro_read(struct rt_device* dev,
                                rt_off_t pos,
                                void* buffer,
@@ -52,6 +57,7 @@ static rt_size_t hal_gyro_read(struct rt_device* dev,
     return rb;
 }
 
+_EXT_DTCM1
 static rt_err_t hal_gyro_control(struct rt_device* dev,
                                  int cmd,
                                  void* args)
@@ -70,6 +76,8 @@ static rt_err_t hal_gyro_control(struct rt_device* dev,
     return ret;
 }
 
+
+_EXT_DTCM1
 rt_err_t hal_gyro_register(gyro_dev_t gyro, const char* name, rt_uint32_t flag, void* data)
 {
     rt_err_t ret;
